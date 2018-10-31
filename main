@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("请输入行数和列数：");
+        int m = in.nextInt();
+        int n = in.nextInt();
+        int[][] arr = new int[m][n];
+        int lines = m, columns =n;
+        int min = Math.min(m, n);
+        int cycleNum = min / 2;
+        if(0 != min % 2)
+            cycleNum++;
+        /*
+        赋值一圈为一个循环
+        循环次数为行列的最小值的一半
+        如果是奇数则需再加 1
+         */
+        int count = 1;
+        int i = 0, j = 0;
+        for(int k = 0; k < cycleNum; k++){
+            arr[i][j] = count++;
+            for(j++; j < n; j++)
+                arr[i][j] = count++;
+            for(i++, j--; i < m; i++)
+                arr[i][j] = count++;
+            for(i--, j--; j >= k; j--)
+                arr[i][j] = count++;
+            for(j++, i--; i > k; i--)
+                arr[i][j] = count++;
+            i++;
+            j++;//为了下次循环第一句能够正常赋值
+            m--; n--;
+        }
+        for (i = 0; i < lines; i++) {
+            for (j = 0; j < columns; j++)
+                System.out.print("\t" + arr[i][j]);
+            System.out.println();
+        }
+    }
+    
+
+}
